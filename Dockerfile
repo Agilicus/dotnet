@@ -21,6 +21,7 @@ RUN apt-get update \
 
 COPY fastcgi_params /etc/nginx/fastcgi_params
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY Index.html /app
 
 USER dotnet
 EXPOSE 5000
