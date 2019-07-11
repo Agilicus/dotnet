@@ -16,6 +16,7 @@ RUN apt-get update \
  && useradd --create-home -s /bin/bash dotnet \
  && mkdir -p /app \
  && chown dotnet:dotnet /app \
+ && mkdir -p ~/dotnet/.config/"Mono development team" \
  && chown -R dotnet:dotnet /var/log/nginx /var/cache/nginx \
  && rm -rf /var/lib/apt/lists/*
 
