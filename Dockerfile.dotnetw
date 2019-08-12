@@ -1,0 +1,55 @@
+FROM ubuntu:18.04
+LABEL maintainer="don@agilicus.com"
+
+WORKDIR /app
+
+# This scary-looking variable only causes apt-key to not warn on the
+# output not being stdout (output should not be parsed).
+ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN dpkg --add-architecture i386 \
+ && apt-get update \
+ && apt-get -y upgrade \
+ && apt-get -y install curl gnupg2 \
+ && curl -L https://nginx.org/keys/nginx_signing.key | apt-key add - \
+ && echo "deb http://nginx.org/packages/mainline/debian/ stretch nginx" >> /etc/apt/sources.list \
+ && curl -L https://dl.winehq.org/wine-builds/winehq.key | apt-key add - \
+ && echo "deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main" >> /etc/apt/sources.list \
+ && apt-get update \
+ && curl -L https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/amd64/libfaudio0_19.07-0~bionic_amd64.deb > /tmp/libfaudio0_19.07-0~bionic_amd64.deb \
+ && curl -L https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/i386/libfaudio0_19.07-0~bionic_i386.deb > /tmp/libfaudio0_19.07-0~bionic_i386.deb \
+ && dpkg -i --force-all /tmp/libf*deb \
+ && apt --fix-broken -y install \
+ && apt-get install -y --install-recommends winehq-devel wine-devel wine-devel-amd64 wine-devel-i386 nginx xvfb x11vnc cabextract libntlm0 libwbclient0 ttf-mscorefonts-installer winbind unzip \
+ && curl -sL https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks > /usr/local/bin/winetricks \
+ && chmod a=rx /usr/local/bin/winetricks \
+ && useradd --create-home -s /bin/bash dotnet \
+ && mkdir -p /app \
+ && chown dotnet:dotnet /app \
+ && chown -R dotnet:dotnet /var/log/nginx /var/cache/nginx /etc/nginx \
+ && rm -rf /var/lib/apt/lists/* /tmp/*
+
+USER dotnet
+ENV WINEARCH=win32
+
+RUN Xvfb :1 & export DISPLAY=:1 \
+ && cd /tmp \
+ && WINEDLLOVERRIDES="mscoree,mshtml=" wineboot -u \
+ && winetricks -q dotnet471 \
+ && curl -sL https://origin.softwaredownloads.sap.com/public/file/0020000000899092019 > cr-64.zip \
+ && unzip cr-64.zip \
+ && (set +e; wine msiexec /i CRforVS_redist_install_32bit_13_0_25/CRRuntime_64bit_13_0_25.msi /qn /norestart ALLUSERS=1 || /bin/true) \
+ && pkill Xvfb || /bin/true \
+ && rm -rf ~/.cache /tmp/*
+
+ENV WINEPATH='C:\\windows\\system32;C:\\windows;C:\\windows\\system32\\wbem;C:\\Program Files\\SAP BusinessObjects\\Crystal Reports for .NET Framework 4.0\\Common\\SAP BusinessObjects Enterprise XI 4.0\\win32_x86'
+ENV DISPLAY=:0
+
+COPY fastcgi_params /etc/nginx/fastcgi_params
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY Index.html /app
+
+EXPOSE 5000
+ENTRYPOINT [ "sh", "-c", "Xvfb :0 & wine fastcgi-mono-server4 --applications=/:. --socket=tcp:127.0.0.1:9000 & exec nginx -g 'daemon off;'" ]
+
