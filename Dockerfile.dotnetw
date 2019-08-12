@@ -32,6 +32,7 @@ RUN dpkg --add-architecture i386 \
 
 USER dotnet
 ENV WINEARCH=win32
+ENV WINEDEBUG=-all
 
 RUN Xvfb :1 & export DISPLAY=:1 \
  && cd /tmp \
