@@ -26,5 +26,5 @@ COPY Index.html /app
 
 USER dotnet
 EXPOSE 5000
-ENTRYPOINT [ "sh", "-c", "fastcgi-mono-server4 --applications=/:. --socket=tcp:127.0.0.1:9000 & exec nginx" ]
+ENTRYPOINT [ "sh", "-c", "fastcgi-mono-server4 --applications=/:. --socket=tcp:127.0.0.1:9000 & exec nginx -g 'daemon off;'" ]
 
