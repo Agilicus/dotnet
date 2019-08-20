@@ -5,7 +5,7 @@ RUN apt-get update \
  && apt-get install -y git \
  && git clone https://github.com/Agilicus/xsp.git \
  && cd xsp \
- && git checkout 6f509db87a9d7f629d3db6a28024adff425d4bc2 \
+ && git checkout 5b68b25db1be92243c8b9533f0a344b5562418a3 \
  && cd src/Mono.WebServer         && nuget restore -PackagesDirectory ../packages && cd ../.. \
  && cd src/Mono.WebServer.FastCgi && nuget restore -PackagesDirectory ../packages && cd ../.. \
  && cd src/Mono.WebServer         && cp AssemblyInfo4.cs.in AssemblyInfo4.cs                                 && msbuild /p:Configuration=Release && cd ../.. \
