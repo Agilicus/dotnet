@@ -8,7 +8,7 @@ WORKDIR /app
 ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
 
 RUN apt-get update \
- && apt-get -y install curl gnupg2 dumb-init \
+ && apt-get -y install curl gnupg2 dumb-init libfcgi0ldbl \
  && curl -L https://nginx.org/keys/nginx_signing.key | apt-key add - \
  && echo "deb http://nginx.org/packages/mainline/debian/ stretch nginx" >> /etc/apt/sources.list \
  && apt-get update \
