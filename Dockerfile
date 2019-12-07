@@ -1,4 +1,4 @@
-FROM mono:5-slim
+FROM mono:6-slim
 LABEL maintainer="don@agilicus.com"
 
 WORKDIR /app
@@ -8,16 +8,14 @@ WORKDIR /app
 ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
 
 RUN apt-get update \
- && apt-get -y install curl gnupg2 dumb-init libfcgi0ldbl \
- && curl -L https://nginx.org/keys/nginx_signing.key | apt-key add - \
- && echo "deb http://nginx.org/packages/mainline/debian/ stretch nginx" >> /etc/apt/sources.list \
+ && apt-get -y install curl gnupg2 dumb-init libfcgi0ldbl gnupg2 \
  && apt-get update \
- && apt-get install -y mono-xsp4 mono-fastcgi-server4 mono-fpm-server nginx \
+ && apt-get install -y mono-xsp4 mono-fastcgi-server4 mono-fpm-server nginx-extras \
  && useradd --create-home -s /bin/bash dotnet \
  && mkdir -p /app \
  && chown dotnet:dotnet /app \
  && mkdir -p ~/dotnet/.config/"Mono development team" \
- && chown -R dotnet:dotnet /var/log/nginx /var/cache/nginx \
+ && chown -R dotnet:dotnet /var/log/nginx /etc/nginx \
  && rm -rf /var/lib/apt/lists/*
 
 COPY fastcgi_params /etc/nginx/fastcgi_params
