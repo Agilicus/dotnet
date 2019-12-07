@@ -36,9 +36,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN dpkg --add-architecture i386 \
  && apt-get update \
  && apt-get -y upgrade \
- && apt-get -y install curl gnupg2 dumb-init libfcgi0ldbl \
- && curl -L https://nginx.org/keys/nginx_signing.key | apt-key add - \
- && echo "deb http://nginx.org/packages/mainline/debian/ stretch nginx" >> /etc/apt/sources.list \
+ && apt-get -y install curl gnupg2 dumb-init libfcgi0ldbl software-properties-common \
+ && add-apt-repository -y ppa:nginx/stable \
+ && apt-get -y install nginx-extras \
  && curl -L https://dl.winehq.org/wine-builds/winehq.key | apt-key add - \
  && echo "deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main" >> /etc/apt/sources.list \
  && apt-get update \
@@ -47,13 +47,13 @@ RUN dpkg --add-architecture i386 \
  && dpkg -i --force-all /tmp/libf*deb \
  && apt --fix-broken -y install \
  && echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections \
- && apt-get install -y --install-recommends winehq-stable wine-stable wine-stable-amd64 wine-stable-i386 nginx xvfb x11vnc cabextract libntlm0 libwbclient0 ttf-mscorefonts-installer winbind unzip wget \
+ && apt-get install -y --install-recommends winehq-stable wine-stable wine-stable-amd64 wine-stable-i386 xvfb x11vnc cabextract libntlm0 libwbclient0 ttf-mscorefonts-installer winbind unzip wget \
  && curl -sL https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks > /usr/local/bin/winetricks \
  && chmod a=rx /usr/local/bin/winetricks \
  && useradd --create-home -s /bin/bash dotnet \
  && mkdir -p /app \
  && chown dotnet:dotnet /app \
- && chown -R dotnet:dotnet /var/log/nginx /var/cache/nginx /etc/nginx \
+ && chown -R dotnet:dotnet /var/log/nginx /etc/nginx \
  && rm -rf /var/lib/apt/lists/* /tmp/* /home/dotnet/.wine/drive_c/users/dotnet/Temp/* \
  && mkdir -p /tmp/.X11-unix \
  && chmod 1777 /tmp/.X11-unix
