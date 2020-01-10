@@ -1,0 +1,39 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as sample
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+RUN mkdir -p /src && \
+    cd /src && \
+    dotnet new webApp -o /src --no-https && \
+    dotnet build -c release -o /app
+
+FROM agilicus/openresty
+LABEL maintainer="don@agilicus.com"
+
+WORKDIR /app
+
+# This scary-looking variable only causes apt-key to not warn on the
+# output not being stdout (output should not be parsed).
+ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+RUN wget -O /tmp/packages-microsoft-prod.deb -q https://packages.microsoft.com/config/ubuntu/19.04/packages-microsoft-prod.deb && \
+    dpkg -i /tmp/packages-microsoft-prod.deb && \
+    apt-get update && \
+    apt-get -y install gnupg2 ca-certificates dotnet-sdk-3.1 dumb-init
+
+RUN useradd --create-home -s /bin/bash dotnet \
+ && mkdir -p /app \
+ && touch /usr/local/openresty/nginx/logs/error.log \
+ && chown dotnet:dotnet /app /usr/local/openresty/nginx/logs/error.log \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY --from=sample /app/* /app/
+COPY fastcgi_params /usr/local/openresty/nginx/conf/fastcgi_params
+COPY nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
+COPY serve-dotnetcore.conf /usr/local/openresty/nginx/conf/serve.conf
+#COPY Index.html /app
+COPY entry-dotnetcore.sh /entry.sh
+
+USER dotnet
+EXPOSE 5000
+ENTRYPOINT [ "/usr/bin/dumb-init", "--" ]
+CMD [ "/entry.sh" ]

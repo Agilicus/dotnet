@@ -24,7 +24,7 @@ wine /home/dotnet/.wine/drive_c/windows/Microsoft.NET/Framework/v4.0.30319/ngen.
 log "Start fastcgi"
 wine /home/dotnet/.wine/drive_c/windows/Microsoft.NET/assembly/GAC_32/fastcgi-mono-server4/v4.0_0.4.0.0__0738eb9f132ed756/fastcgi-mono-server4.exe --applications=/:. --socket=tcp:127.0.0.1:9000 &
 wait_ready
-log "Start nginx"
-nginx -g 'daemon off;' &
+log "Start openresty"
+openresty -g 'daemon off;' &
 wait -n
 log "Exit..."

@@ -9,15 +9,20 @@ wait_ready() {
     SCRIPT_FILENAME=/
     QUERY_STRING= REQUEST_URI=/
     REQUEST_METHOD=GET
-    until cgi-fcgi -bind -connect 127.0.0.1:9000 |grep -q "Status: 200 OK"
+    until curl -sq localhost:9000 >/dev/null 2>&1
     do
-        log "Wait for fastcgi-mono to be ready"
+        log "Wait for dotnetcore to be ready"
         sleep 1
     done
 }
 
-log "Start fastcgi"
-fastcgi-mono-server4 --applications=/:. --socket=tcp:127.0.0.1:9000 &
+export ASPNETCORE_URLS=http://0.0.0.0:9000
+
+# Make an assumption the most recent dll is the entrypoint
+ENTRY=$(ls -tr *.runtimeconfig.json | tail -1)
+ENTRY=${ENTRY%.runtimeconfig.json}.dll
+log "Start dotnetcore for $ENTRY"
+dotnet $ENTRY &
 wait_ready
 log "Start openresty"
 openresty -g 'daemon off;' &
