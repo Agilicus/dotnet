@@ -33,3 +33,8 @@ and then open your browser to `http://localhost:5000`
 
 On the FROM line, you may use `agilicus/dotnet`: small, fast, secure. Or you
 may select `agilicus/dotnetw`: compatible.
+
+## Environment variables
+
+- HDR_CONTENT_SECURITY_POLICY
+- HDR_FEATURE_POLICY
