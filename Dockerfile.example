@@ -1,0 +1,9 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as sample
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+RUN mkdir -p /src && \
+    cd /src && \
+    dotnet new webApp -o /src --no-https && \
+    dotnet build -c release -o /app
+
+FROM agilicus/dotnetc
+COPY --from=sample /app /app

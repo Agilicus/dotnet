@@ -23,7 +23,7 @@ RUN apt-get update \
  && cp src/Mono.WebServer.FastCgi/bin/Release/* /tmp/fcgi \
  && ls /tmp/fcgi
 
-FROM ubuntu:18.04
+FROM agilicus/openresty
 LABEL maintainer="don@agilicus.com"
 
 WORKDIR /app
@@ -37,8 +37,6 @@ RUN dpkg --add-architecture i386 \
  && apt-get update \
  && apt-get -y upgrade \
  && apt-get -y install curl gnupg2 dumb-init libfcgi0ldbl software-properties-common \
- && add-apt-repository -y ppa:nginx/stable \
- && apt-get -y install nginx-extras \
  && curl -L https://dl.winehq.org/wine-builds/winehq.key | apt-key add - \
  && echo "deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main" >> /etc/apt/sources.list \
  && apt-get update \
@@ -52,8 +50,8 @@ RUN dpkg --add-architecture i386 \
  && chmod a=rx /usr/local/bin/winetricks \
  && useradd --create-home -s /bin/bash dotnet \
  && mkdir -p /app \
- && chown dotnet:dotnet /app \
- && chown -R dotnet:dotnet /var/log/nginx /etc/nginx \
+ && touch /usr/local/openresty/nginx/logs/error.log \
+ && chown dotnet:dotnet /app /usr/local/openresty/nginx/logs/error.log \
  && rm -rf /var/lib/apt/lists/* /tmp/* /home/dotnet/.wine/drive_c/users/dotnet/Temp/* \
  && mkdir -p /tmp/.X11-unix \
  && chmod 1777 /tmp/.X11-unix
@@ -104,8 +102,9 @@ RUN Xvfb :1 & echo \
  && cd / \
  && rm -rf ~/.cache /tmp/.X1-lock /tmp/*
 
-COPY fastcgi_params /etc/nginx/fastcgi_params
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY fastcgi_params /usr/local/openresty/nginx/conf/fastcgi_params
+COPY nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
+COPY serve.conf /usr/local/openresty/nginx/conf/serve.conf
 COPY Index.html /app
 COPY entry-dotnetw.sh /
 

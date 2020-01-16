@@ -1,11 +1,51 @@
-## dotnet
+## dotnet{c/m/w}
 
-This container will server an ASP.net application, via nginx,
-with JSON-logging.
+This container will server an ASP.net application, via openresty
+with JSON-logging and embedded WAF.
 
 Place the app in /app.
 
-## Use
+There are 3 containers built:
+
+- dotnetc --> dotnetcore 3.1 for modern applications
+- dotnetm --> .NET on Mono for legacy applications
+- dotnetw --> .NET on Mono on Wine for legacy applications that need win32
+
+Each works the same way: [openresty](https://openresty.org/) and [lua-resty-waf](https://github.com/p0pr0ck5/lua-resty-waf)
+run on port 5000
+
+## Use (dotnetcore)
+
+Create a Dockerfile for your application as:
+
+```
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
+WORKDIR /app
+
+COPY * /src
+WORKDIR /src
+RUN dotnet restore
+
+# Copy everything else and build
+COPY . /src
+RUN dotnet publish -c release -o /app
+
+FROM agilicus/dotnetc
+WORKDIR /app
+COPY --from=build-env /app /app
+```
+
+and then build and test as:
+
+```
+tag=$(date +%Y%m%d_%H%M%S)
+docker build -t MYNAME:$tag .
+docker run --rm -it -p 5000:5000 MYNAME:$tag
+```
+
+and then open your browser to `http://localhost:5000`
+
+## Use (.NET)
 
 Create a Dockerfile for your application as:
 
@@ -19,17 +59,21 @@ RUN nuget restore -PackagesDirectory ../packages
 
 RUN msbuild  /p:Configuration=Release\;WebOutputDir=/tmp/x\;OutDir=/tmp/x MYPROJECT.sln
 
-FROM agilicus/dotnet
-
+FROM agilicus/dotnetw
 WORKDIR /app
 COPY --from=build-env --chown=dotnet /tmp/x/_PublishedWebsites/MYAPP .
 ```
 
 You may test it with:
-`docker build -t MYTAG .`
-`docker run --rm -it -p5000:5000 MYTAG`
+```
+tag=$(date +%Y%m%d_%H%M%S)
+docker build -t MYNAME:$tag .
+docker run --rm -it -p 5000:5000 MYNAME:$tag
+```
 
 and then open your browser to `http://localhost:5000`
 
-On the FROM line, you may use `agilicus/dotnet`: small, fast, secure. Or you
-may select `agilicus/dotnetw`: compatible.
+## Environment variables
+
+- HDR_CONTENT_SECURITY_POLICY
+- HDR_FEATURE_POLICY
