@@ -40,10 +40,10 @@ and then build and test as:
 ```
 tag=$(date +%Y%m%d_%H%M%S)
 docker build -t MYNAME:$tag .
-docker run --rm -it -p 5000:5000 MYNAME:$tag
+docker run --rm -it -p 4200:5000 MYNAME:$tag
 ```
 
-and then open your browser to `http://localhost:5000`
+and then open your browser to `http://localhost:4200`
 
 ## Use (.NET)
 
@@ -68,7 +68,14 @@ You may test it with:
 ```
 tag=$(date +%Y%m%d_%H%M%S)
 docker build -t MYNAME:$tag .
-docker run --rm -it -p 5000:5000 MYNAME:$tag
+docker run --rm -it -p 4200:5000 MYNAME:$tag
+```
+
+You may override the nginx.conf/lua rules and the app:
+
+
+```
+docker run --rm -it -p 4200:5000 -v $PWD/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf -v $PWD/rules:/rules -v $PWD/app:/app MYNAME:$tag
 ```
 
 and then open your browser to `http://localhost:5000`

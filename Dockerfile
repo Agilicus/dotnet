@@ -30,6 +30,7 @@ COPY nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
 COPY serve.conf /usr/local/openresty/nginx/conf/serve.conf
 COPY Index.html /app
 COPY entry.sh /
+COPY rules /rules/
 
 USER dotnet
 EXPOSE 5000

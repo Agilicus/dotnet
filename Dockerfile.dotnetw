@@ -107,6 +107,7 @@ COPY nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
 COPY serve.conf /usr/local/openresty/nginx/conf/serve.conf
 COPY Index.html /app
 COPY entry-dotnetw.sh /
+COPY rules /rules/
 
 EXPOSE 5000
 ENTRYPOINT [ "/usr/bin/dumb-init", "--" ]
