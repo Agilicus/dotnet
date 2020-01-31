@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://git.agilicus.com/open-source/dotnet/compare/v0.0.3...v0.0.4) (2020-01-31)
+
+
+### Bug Fixes
+
+* re-set secure cookies on / ([b9e55d8](https://git.agilicus.com/open-source/dotnet/commit/b9e55d84cbdac4fe3dab7b71aec19bc53430dfbd))
+
 ### [0.0.3](https://git.agilicus.com/open-source/dotnet/compare/v0.0.2...v0.0.3) (2020-01-31)
 
 
