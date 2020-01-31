@@ -1,5 +1,6 @@
 -- if x-forwarded-proto is set to https, then force all cookies to secure
-if ngx.header["x-forwarded-proto"] == "https" then
+local headers = ngx.req.get_headers()
+if headers["x-forwarded-proto"] == "https" then
 
   local ck = require "resty.cookie"
   local cookie, err = ck:new()
@@ -8,7 +9,6 @@ if ngx.header["x-forwarded-proto"] == "https" then
   if fields then
 
     for k, v in pairs(fields) do
-       ngx.log(ngx.STDERR, k, " => ", v)
        local ok, err = cookie:set({
 	 key = k,
 	 value = v,
@@ -16,10 +16,10 @@ if ngx.header["x-forwarded-proto"] == "https" then
        })
     end
 
-    local fields1, err = cookie:get_all()
-    for k, v in pairs(fields) do
-       ngx.log(ngx.STDERR, "new => ", k, " => ", v)
-    end
+#    local fields1, err = cookie:get_all()
+#    for k, v in pairs(fields) do
+#       ngx.log(ngx.STDERR, "new => ", k, " => ", v)
+#    end
 
   end
 
