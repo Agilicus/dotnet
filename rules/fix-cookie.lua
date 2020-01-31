@@ -12,6 +12,7 @@ if headers["x-forwarded-proto"] == "https" then
        local ok, err = cookie:set({
 	 key = k,
 	 value = v,
+         path = "/",
 	 secure = true
        })
     end
