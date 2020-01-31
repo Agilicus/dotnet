@@ -16,10 +16,10 @@ if headers["x-forwarded-proto"] == "https" then
        })
     end
 
-#    local fields1, err = cookie:get_all()
-#    for k, v in pairs(fields) do
-#       ngx.log(ngx.STDERR, "new => ", k, " => ", v)
-#    end
+--   local fields1, err = cookie:get_all()
+--   for k, v in pairs(fields) do
+--      ngx.log(ngx.STDERR, "new => ", k, " => ", v)
+--   end
 
   end
 
