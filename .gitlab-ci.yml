@@ -67,9 +67,9 @@ build:
   services:
     - name: docker:dind
   script: |
-    std-build-tag-push -s m
-    std-build-tag-push -s c
-    std-build-tag-push -s w
+    std-build-tag-push -s m -f Dockerfile.dotnetm
+    std-build-tag-push -s c -f Dockerfile.dotnetc
+    std-build-tag-push -s w -f Dockerfile.dotnetw
 
 #
 # If a tag is present, this could mean that the 'autorel' has
