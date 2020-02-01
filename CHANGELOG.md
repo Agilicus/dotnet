@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://git.agilicus.com/open-source/dotnet/compare/v0.0.5...v0.0.6) (2020-02-01)
+
+
+### Bug Fixes
+
+* remove run-time ngen ([0eb534b](https://git.agilicus.com/open-source/dotnet/commit/0eb534b4fcf369605ce8d612fe924bb7d68f793b))
+
 ### [0.0.5](https://git.agilicus.com/open-source/dotnet/compare/v0.0.4...v0.0.5) (2020-02-01)
 
 
