@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://git.agilicus.com/open-source/dotnet/compare/v0.0.6...v0.0.7) (2020-02-02)
+
+
+### Features
+
+* add http and jwt libraries ([bcfa541](https://git.agilicus.com/open-source/dotnet/commit/bcfa541cffd1b39589af7b6fb96d8e0c61290199))
+
 ### [0.0.6](https://git.agilicus.com/open-source/dotnet/compare/v0.0.5...v0.0.6) (2020-02-01)
 
 
