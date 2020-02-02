@@ -23,7 +23,7 @@ RUN apt-get update \
  && cp src/Mono.WebServer.FastCgi/bin/Release/* /tmp/fcgi \
  && ls /tmp/fcgi
 
-FROM agilicus/openresty
+FROM agilicus/openresty:v0.0.3
 LABEL maintainer="don@agilicus.com"
 
 WORKDIR /app

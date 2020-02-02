@@ -1,4 +1,4 @@
-FROM agilicus/openresty
+FROM agilicus/openresty:v0.0.3
 LABEL maintainer="don@agilicus.com"
 
 WORKDIR /app
