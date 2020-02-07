@@ -84,3 +84,6 @@ and then open your browser to `http://localhost:5000`
 
 - HDR_CONTENT_SECURITY_POLICY
 - HDR_FEATURE_POLICY
+
+It will include configuration in server-scope from /rules/server.d/*.
+It will include configuration in location-scope from /rules/location.d/*.

@@ -13,7 +13,9 @@ if headers["x-forwarded-proto"] == "https" then
 	 key = k,
 	 value = v,
          path = "/",
-	 secure = true
+         httponly = true,
+	 secure = true,
+         samesite = "Strict"
        })
     end
 

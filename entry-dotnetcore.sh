@@ -19,8 +19,9 @@ wait_ready() {
 export ASPNETCORE_URLS=http://0.0.0.0:9000
 
 # Make an assumption the most recent dll is the entrypoint
-ENTRY=$(ls -tr *.runtimeconfig.json | tail -1)
-ENTRY=${ENTRY%.runtimeconfig.json}.dll
+#ENTRY=$(ls -tr *.runtimeconfig.json | tail -1)
+#ENTRY=${ENTRY%.runtimeconfig.json}.dll
+ENTRY=$(xml2 < [wW]eb.config | awk -F =  '/arguments/ { gsub("^[^a-zA-Z0-9]*", "", $2); print $2})'
 log "Start dotnetcore for $ENTRY"
 dotnet $ENTRY &
 wait_ready
@@ -28,3 +29,4 @@ log "Start openresty"
 openresty -g 'daemon off;' &
 wait -n
 log "Exit..."
+
