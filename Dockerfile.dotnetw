@@ -33,6 +33,8 @@ WORKDIR /app
 ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Mirror: https://web.archive.org/web/20180518033311/http://www.business.uwm.edu/gdrive/Dietenberger_E/PowerPointViewer.exe
+COPY ./ppv/PowerPointViewer.exe /home/dotnet/.cache/winetricks/PowerPointViewer/
 RUN dpkg --add-architecture i386 \
  && apt-get update \
  && apt-get -y upgrade \
@@ -45,13 +47,13 @@ RUN dpkg --add-architecture i386 \
  && dpkg -i --force-all /tmp/libf*deb \
  && apt --fix-broken -y install \
  && echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections \
- && apt-get install -y --install-recommends winehq-stable wine-stable wine-stable-amd64 wine-stable-i386 xvfb x11vnc cabextract libntlm0 libwbclient0 ttf-mscorefonts-installer winbind unzip wget \
+ && apt-get install -y --install-recommends winehq-stable wine-stable wine-stable-amd64 wine-stable-i386 xvfb x11vnc cabextract libntlm0 libwbclient0 ttf-mscorefonts-installer winbind unzip xml2 wget \
  && curl -sL https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks > /usr/local/bin/winetricks \
  && chmod a=rx /usr/local/bin/winetricks \
  && useradd --create-home -s /bin/bash dotnet \
  && mkdir -p /app \
  && touch /usr/local/openresty/nginx/logs/error.log \
- && chown dotnet:dotnet /app /usr/local/openresty/nginx/logs/error.log \
+ && chown -R dotnet:dotnet /app /usr/local/openresty/nginx/logs/error.log /home/dotnet \
  && rm -rf /var/lib/apt/lists/* /tmp/* /home/dotnet/.wine/drive_c/users/dotnet/Temp/* \
  && mkdir -p /tmp/.X11-unix \
  && chmod 1777 /tmp/.X11-unix
