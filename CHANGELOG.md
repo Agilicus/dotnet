@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://git.agilicus.com/open-source/dotnet/compare/v0.0.7...v0.0.8) (2020-02-07)
+
+
+### Features
+
+* add xml2, auto-find of dotnetcore entry, rules include ([e5e1609](https://git.agilicus.com/open-source/dotnet/commit/e5e16098cdbe6493841b6092e9f170778b31ab16))
+
+
+### Bug Fixes
+
+* add missing file ([2b34584](https://git.agilicus.com/open-source/dotnet/commit/2b34584479c7e8a8da6072be44b454978101a49f))
+
 ### [0.0.7](https://git.agilicus.com/open-source/dotnet/compare/v0.0.6...v0.0.7) (2020-02-02)
 
 
