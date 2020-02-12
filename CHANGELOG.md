@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.9](https://git.agilicus.com/open-source/dotnet/compare/v0.0.8...v0.0.9) (2020-02-12)
+
+
+### Bug Fixes
+
+* add proxy_max_temp_file_size=0 setting ([3673091](https://git.agilicus.com/open-source/dotnet/commit/36730912f6f3af6cc9d4f664492424bd9fb2f23b)), closes [44#44](https://git.agilicus.com/open-source/44/issues/44)
+
 ### [0.0.8](https://git.agilicus.com/open-source/dotnet/compare/v0.0.7...v0.0.8) (2020-02-07)
 
 
