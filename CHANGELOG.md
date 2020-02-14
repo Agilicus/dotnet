@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.10](https://git.agilicus.com/open-source/dotnet/compare/v0.0.9...v0.0.10) (2020-02-14)
+
+
+### Bug Fixes
+
+* correct wrong quote on entry determination ([0fc21c8](https://git.agilicus.com/open-source/dotnet/commit/0fc21c87cf118b653a8388a9b6462b7275a8064a))
+
 ### [0.0.9](https://git.agilicus.com/open-source/dotnet/compare/v0.0.8...v0.0.9) (2020-02-12)
 
 
