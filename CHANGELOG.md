@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.12](https://git.agilicus.com/open-source/dotnet/compare/v0.0.11...v0.0.12) (2020-02-21)
+
+
+### Bug Fixes
+
+* add 404 as valid condition for e.g. api ([8a4fc3c](https://git.agilicus.com/open-source/dotnet/commit/8a4fc3c3f189ad8399a2bc58fc29947eeaad3eba))
+
 ### [0.0.11](https://git.agilicus.com/open-source/dotnet/compare/v0.0.10...v0.0.11) (2020-02-21)
 
 
