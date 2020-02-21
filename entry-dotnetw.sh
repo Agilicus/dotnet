@@ -8,7 +8,7 @@ wait_ready() {
     SCRIPT_FILENAME=/
     QUERY_STRING= REQUEST_URI=/
     REQUEST_METHOD=GET
-    until cgi-fcgi -bind -connect 127.0.0.1:9000 |egrep -q "Status: 200 OK|500 No App"
+    until cgi-fcgi -bind -connect 127.0.0.1:9000 |egrep -q "Status: 200 OK|Status: 404 Not Found"
     do
         log "Wait for fastcgi-mono to be ready"
         sleep 1
