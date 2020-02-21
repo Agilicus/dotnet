@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.11](https://git.agilicus.com/open-source/dotnet/compare/v0.0.10...v0.0.11) (2020-02-21)
+
+
+### Bug Fixes
+
+* allow 500 No Application for health check ([7a56d13](https://git.agilicus.com/open-source/dotnet/commit/7a56d135bb860c9c09d03469b0ad30dc331ed6ca))
+
 ### [0.0.10](https://git.agilicus.com/open-source/dotnet/compare/v0.0.9...v0.0.10) (2020-02-14)
 
 
