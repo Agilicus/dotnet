@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.13](https://git.agilicus.com/open-source/dotnet/compare/v0.0.12...v0.0.13) (2020-02-22)
+
+
+### Bug Fixes
+
+* add dns resolver ([5032a7c](https://git.agilicus.com/open-source/dotnet/commit/5032a7c0ddff0b572c03c62171220ccd75bcb10b))
+
 ### [0.0.12](https://git.agilicus.com/open-source/dotnet/compare/v0.0.11...v0.0.12) (2020-02-21)
 
 
