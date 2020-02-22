@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.14](https://git.agilicus.com/open-source/dotnet/compare/v0.0.13...v0.0.14) (2020-02-22)
+
+
+### Bug Fixes
+
+* add xls_token from env var XLS_TOKEN ([d9d5cf1](https://git.agilicus.com/open-source/dotnet/commit/d9d5cf12294147c7015b07f2f19f3286fc52d5fe))
+
 ### [0.0.13](https://git.agilicus.com/open-source/dotnet/compare/v0.0.12...v0.0.13) (2020-02-22)
 
 
