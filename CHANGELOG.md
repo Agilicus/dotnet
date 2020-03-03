@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.16](https://git.agilicus.com/open-source/dotnet/compare/v0.0.15...v0.0.16) (2020-03-03)
+
+
+### Bug Fixes
+
+* correct dotnetcore entrypoint ([f6f70cc](https://git.agilicus.com/open-source/dotnet/commit/f6f70cc76de5f445b9378ea02808768bfc91ef79))
+
 ### [0.0.15](https://git.agilicus.com/open-source/dotnet/compare/v0.0.14...v0.0.15) (2020-02-25)
 
 
