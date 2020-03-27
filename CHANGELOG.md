@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.17](https://git.agilicus.com/open-source/dotnet/compare/v0.0.16...v0.0.17) (2020-03-27)
+
+
+### Bug Fixes
+
+* add 302 as valid start condition ([1355720](https://git.agilicus.com/open-source/dotnet/commit/135572065f71ed29da2623dedf08239077bd7a1a))
+
 ### [0.0.16](https://git.agilicus.com/open-source/dotnet/compare/v0.0.15...v0.0.16) (2020-03-03)
 
 
