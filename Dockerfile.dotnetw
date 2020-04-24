@@ -1,7 +1,5 @@
 FROM alpine as fetch
 RUN apk add curl \
- && printf "\nfetch CR\n\n" \
- && curl -sL https://origin.softwaredownloads.sap.com/public/file/0020000000899062019 > /tmp/cr-32.zip \
  && printf "\nfetch wine-mono\n\n" \
  && curl -sL https://dl.winehq.org/wine/wine-mono/4.9.2/wine-mono-4.9.2.msi > /tmp/wine-mono-2.9.2.msi \
  && printf "\nfetch wine-gecko\n\n" \
@@ -78,20 +76,26 @@ RUN Xvfb :1 & echo \
  && wine msiexec /i wine_gecko-2.47-x86.msi \
  && printf "\nReboot\n\n" \
  && wineboot -s \
+ && printf "\nInstall dotnet48\n\n" \
+ && winetricks -q dotnet48 \
  && printf "\nInstall dotnet452\n\n" \
  && winetricks -q dotnet452 \
  && printf "\nInstall dotnet471\n\n" \
  && winetricks -q dotnet471 \
  && printf "\nInstall fonts\n\n" \
- && winetricks -q corefonts consolas cambria calibri arial courier georgia impact lucida tahoma trebuchet verdana webdings \
+ && winetricks -q corefonts consolas cambria calibri arial courier georgia impact lucida tahoma trebuchet verdana webdings
+RUN : \
+ && cd /tmp \
  && printf "\nunzip CR\n\n" \
- && unzip cr-32.zip \
+ && unzip fcgi/cr-32.zip \
  && printf "start CR phase(1)\n" \
- && wine msiexec /i CRforVS_redist_install_32bit_13_0_25/CRRuntime_32bit_13_0_25.msi /qn /norestart ALLUSERS=1 \
+ && wine msiexec /i CRRuntime_32bit_13_0_25.msi /qn /norestart ALLUSERS=1 \
  && printf "Compile .net assemblies\n" \
- && (wine /home/dotnet/.wine/drive_c/windows/Microsoft.NET/Framework/v4.0.30319/ngen.exe update /nologo /force || /bin/true) \
+ && (wine /home/dotnet/.wine/drive_c/windows/Microsoft.NET/Framework/v4.0.30319/ngen.exe update /nologo /force || /bin/true)
+RUN : \
+ && cd /tmp \
  && printf "start CR phase(2)\n" \
- && wine msiexec /i CRforVS_redist_install_32bit_13_0_25/CRRuntime_32bit_13_0_25.msi /qn /norestart ALLUSERS=1 \
+ && wine msiexec /i /tmp/CRRuntime_32bit_13_0_25.msi /qn /norestart ALLUSERS=1 \
  && printf "done\n" \
  && sleep 1 \
  && (pkill Xvfb || /bin/true) \
