@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.18](https://git.agilicus.com/open-source/dotnet/compare/v0.0.17...v0.0.18) (2020-04-24)
+
+
+### Features
+
+* add .net 4.8 support ([1e424eb](https://git.agilicus.com/open-source/dotnet/commit/1e424eb7d85ae0c5127a405c3ad690359556db48))
+
 ### [0.0.17](https://git.agilicus.com/open-source/dotnet/compare/v0.0.16...v0.0.17) (2020-03-27)
 
 
