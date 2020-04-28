@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.19](https://git.agilicus.com/open-source/dotnet/compare/v0.0.18...v0.0.19) (2020-04-28)
+
+
+### Bug Fixes
+
+* add dotnet 4.7.2 ([4a89461](https://git.agilicus.com/open-source/dotnet/commit/4a89461b1e06990a72ea50ad842dba1c7bd4b200))
+
 ### [0.0.18](https://git.agilicus.com/open-source/dotnet/compare/v0.0.17...v0.0.18) (2020-04-24)
 
 
