@@ -111,8 +111,9 @@ RUN : \
  && rm -rf ~/.cache /tmp/.X1-lock /tmp/*
 
 COPY fastcgi_params /usr/local/openresty/nginx/conf/fastcgi_params
-COPY nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
-COPY serve.conf /usr/local/openresty/nginx/conf/serve.conf
+COPY --chown=dotnet nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
+COPY --chown=dotnet serve.conf /usr/local/openresty/nginx/conf/serve.conf
+COPY --chown=dotnet serve-dotnetcore.conf /usr/local/openresty/nginx/conf/serve.dnc
 COPY Index.html /app
 COPY entry-dotnetw.sh /
 COPY rules /rules/
