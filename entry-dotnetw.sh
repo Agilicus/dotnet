@@ -28,7 +28,7 @@ if [ -n "$ENTRY" ]
 then
     # A hybrid .net + dotnetcore, created as a Kestrel executable.
     cp /usr/local/openresty/nginx/conf/serve.dnc /usr/local/openresty/nginx/conf/serve.conf
-    wine $ENTRY &
+    wine $ENTRY >/dev/null &
 else
     wine /home/dotnet/.wine/drive_c/windows/Microsoft.NET/assembly/GAC_32/fastcgi-mono-server4/v4.0_0.4.0.0__0738eb9f132ed756/fastcgi-mono-server4.exe --applications=/:. --socket=tcp:127.0.0.1:9000 &
     wait_ready
