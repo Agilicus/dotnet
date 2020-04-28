@@ -82,6 +82,8 @@ RUN Xvfb :1 & echo \
  && winetricks -q dotnet452 \
  && printf "\nInstall dotnet471\n\n" \
  && winetricks -q dotnet471 \
+ && printf "\nInstall dotnet472\n\n" \
+ && winetricks -q dotnet472 \
  && printf "\nInstall fonts\n\n" \
  && winetricks -q corefonts consolas cambria calibri arial courier georgia impact lucida tahoma trebuchet verdana webdings
 RUN : \
