@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.20](https://git.agilicus.com/open-source/dotnet/compare/v0.0.19...v0.0.20) (2020-04-28)
+
+
+### Bug Fixes
+
+* allow override entry point for hybrid dotnetcore + .net ([93ceec8](https://git.agilicus.com/open-source/dotnet/commit/93ceec8cdc88ea928cae9307c6f615182a1d98c4))
+* redirect entrypoint to /dev/null except for stderr ([047a35e](https://git.agilicus.com/open-source/dotnet/commit/047a35e122b8013d4fbf862688dc5228840e02b4))
+
 ### [0.0.19](https://git.agilicus.com/open-source/dotnet/compare/v0.0.18...v0.0.19) (2020-04-28)
 
 
