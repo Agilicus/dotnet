@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.21](https://git.agilicus.com/open-source/dotnet/compare/v0.0.20...v0.0.21) (2020-04-29)
+
+
+### Bug Fixes
+
+* add real remote_ip and x_request_id to log ([2f0b4c6](https://git.agilicus.com/open-source/dotnet/commit/2f0b4c64474f1253938881f5be0bd6882c1bc26c))
+
 ### [0.0.20](https://git.agilicus.com/open-source/dotnet/compare/v0.0.19...v0.0.20) (2020-04-28)
 
 
