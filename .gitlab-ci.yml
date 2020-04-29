@@ -61,14 +61,28 @@ autorel:
 #  - image:M.m
 #  - image:M
 #
-build:
+build-m:
   stage: build
   image: cr.agilicus.com/corp-tools/docker-compose
   services:
     - name: docker:dind
   script: |
     std-build-tag-push -s m -f Dockerfile.dotnetm
+
+build-c:
+  stage: build
+  image: cr.agilicus.com/corp-tools/docker-compose
+  services:
+    - name: docker:dind
+  script: |
     std-build-tag-push -s c -f Dockerfile.dotnetc
+
+build-w:
+  stage: build
+  image: cr.agilicus.com/corp-tools/docker-compose
+  services:
+    - name: docker:dind
+  script: |
     std-build-tag-push -s w -f Dockerfile.dotnetw
 
 #
@@ -86,4 +100,3 @@ release:
     - branches
   only:
     - tags
-
