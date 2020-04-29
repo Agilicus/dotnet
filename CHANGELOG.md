@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.22](https://git.agilicus.com/open-source/dotnet/compare/v0.0.21...v0.0.22) (2020-04-29)
+
+
+### Bug Fixes
+
+* enable parallel build in CI ([91eb8f9](https://git.agilicus.com/open-source/dotnet/commit/91eb8f9479f9ff9ec4d03f5df17d24f3e68404e2))
+
 ### [0.0.21](https://git.agilicus.com/open-source/dotnet/compare/v0.0.20...v0.0.21) (2020-04-29)
 
 
