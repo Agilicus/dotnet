@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.23](https://git.agilicus.com/open-source/dotnet/compare/v0.0.22...v0.0.23) (2020-06-22)
+
+
+### Bug Fixes
+
+* add seatbelts and checks around entry detection for dotnetcore ([405a300](https://git.agilicus.com/open-source/dotnet/commit/405a30027f446ba85897ed7355b0e64b5b061c74))
+
 ### [0.0.22](https://git.agilicus.com/open-source/dotnet/compare/v0.0.21...v0.0.22) (2020-04-29)
 
 
