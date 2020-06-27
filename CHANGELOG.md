@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.24](https://git.agilicus.com/open-source/dotnet/compare/v0.0.23...v0.0.24) (2020-06-27)
+
+
+### Bug Fixes
+
+* add client_max_body_size=32M ([6d8dd98](https://git.agilicus.com/open-source/dotnet/commit/6d8dd98280031a6226e0f08a7017171db5dc4fec))
+
 ### [0.0.23](https://git.agilicus.com/open-source/dotnet/compare/v0.0.22...v0.0.23) (2020-06-22)
 
 
