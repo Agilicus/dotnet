@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.25](https://git.agilicus.com/open-source/dotnet/compare/v0.0.24...v0.0.25) (2020-07-22)
+
+
+### Bug Fixes
+
+* add sub field from jwt to log ([16f5223](https://git.agilicus.com/open-source/dotnet/commit/16f5223a7d60d26b1cf86774ca8b985c8afd7f5b))
+
 ### [0.0.24](https://git.agilicus.com/open-source/dotnet/compare/v0.0.23...v0.0.24) (2020-06-27)
 
 
