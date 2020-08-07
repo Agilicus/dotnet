@@ -1,9 +1,14 @@
 FROM alpine as fetch
-RUN apk add curl \
+RUN apk add curl openssl \
  && printf "\nfetch wine-mono\n\n" \
- && curl -sL https://dl.winehq.org/wine/wine-mono/4.9.2/wine-mono-4.9.2.msi > /tmp/wine-mono-2.9.2.msi \
+ && curl -sL https://dl.winehq.org/wine/wine-mono/5.1.0/wine-mono-5.1.0-x86.msi > /tmp/wine-mono.msi \
+ && curl -sL https://dl.winehq.org/wine/wine-mono/5.1.0/wine-mono-5.1.0-x86.tar.xz > /tmp/wine-mono.tar.xz \
  && printf "\nfetch wine-gecko\n\n" \
- && curl -sL http://dl.winehq.org/wine/wine-gecko/2.47/wine_gecko-2.47-x86.msi > /tmp/wine_gecko-2.47-x86.msi
+ && curl -sL https://dl.winehq.org/wine/wine-gecko/2.47.1/wine-gecko-2.47.1-x86.msi > /tmp/wine_gecko.msi \
+ && curl -sL https://dl.winehq.org/wine/wine-gecko/2.47.1/wine-gecko-2.47.1-x86.tar.bz2 > /tmp/wine_gecko.tar.bz2
+
+ENV PASS=INTEGRITYCHECK
+RUN curl -sL http://storage.googleapis.com/agilicus/artifacts/wine.tar.xz.20200807151546.enc | openssl enc -d -aes256 -pass env:PASS > /tmp/wine.tar.xz
 
 FROM mono:5 AS build
 ADD ./fcgi /tmp/fcgi
@@ -13,15 +18,24 @@ RUN apt-get update \
  && git clone https://github.com/Agilicus/xsp.git \
  && cd xsp \
  && git checkout 5b68b25db1be92243c8b9533f0a344b5562418a3 \
- && cd src/Mono.WebServer         && nuget restore -PackagesDirectory ../packages && cd ../.. \
- && cd src/Mono.WebServer.FastCgi && nuget restore -PackagesDirectory ../packages && cd ../.. \
- && cd src/Mono.WebServer         && cp AssemblyInfo4.cs.in AssemblyInfo4.cs                                 && msbuild /p:Configuration=Release && cd ../.. \
- && cd src/Mono.WebServer.FastCgi && sed -e 's?@XSP_VERSION@?0.4.0.0?g' AssemblyInfo.cs.in > AssemblyInfo.cs && msbuild /p:Configuration=Release && cd ../.. \
+ && cd src/Mono.WebServer \
+ && nuget restore -PackagesDirectory ../packages \
+ && cd ../.. \
+ && cd src/Mono.WebServer.FastCgi \
+ && nuget restore -PackagesDirectory ../packages && cd ../.. \
+ && cd src/Mono.WebServer \
+ && cp AssemblyInfo4.cs.in AssemblyInfo4.cs \
+ && msbuild /p:Configuration=Release \
+ && cd ../.. \
+ && cd src/Mono.WebServer.FastCgi \
+ && sed -e 's?@XSP_VERSION@?0.4.0.0?g' AssemblyInfo.cs.in > AssemblyInfo.cs \
+ && msbuild /p:Configuration=Release \
+ && cd ../.. \
  && cp src/Mono.WebServer/bin/Release/* /tmp/fcgi \
  && cp src/Mono.WebServer.FastCgi/bin/Release/* /tmp/fcgi \
  && ls /tmp/fcgi
 
-FROM agilicus/openresty:v0.0.3
+FROM agilicus/openresty:v0.3.8
 LABEL maintainer="don@agilicus.com"
 
 WORKDIR /app
@@ -31,6 +45,8 @@ WORKDIR /app
 ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
 ENV DEBIAN_FRONTEND=noninteractive
 
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/wine-stable/bin
+
 # Mirror: https://web.archive.org/web/20180518033311/http://www.business.uwm.edu/gdrive/Dietenberger_E/PowerPointViewer.exe
 COPY ./ppv/PowerPointViewer.exe /home/dotnet/.cache/winetricks/PowerPointViewer/
 RUN dpkg --add-architecture i386 \
@@ -38,82 +54,61 @@ RUN dpkg --add-architecture i386 \
  && apt-get -y upgrade \
  && apt-get -y install curl gnupg2 dumb-init libfcgi0ldbl software-properties-common \
  && curl -L https://dl.winehq.org/wine-builds/winehq.key | apt-key add - \
- && echo "deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main" >> /etc/apt/sources.list \
+ && echo "deb https://dl.winehq.org/wine-builds/ubuntu/ focal main" > /etc/apt/sources.list.d/wine.list \
  && apt-get update \
- && curl -L https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/amd64/libfaudio0_19.07-0~bionic_amd64.deb > /tmp/libfaudio0_19.07-0~bionic_amd64.deb \
- && curl -L https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/i386/libfaudio0_19.07-0~bionic_i386.deb > /tmp/libfaudio0_19.07-0~bionic_i386.deb \
- && dpkg -i --force-all /tmp/libf*deb \
- && apt --fix-broken -y install \
  && echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections \
- && apt-get install -y --install-recommends winehq-stable wine-stable wine-stable-amd64 wine-stable-i386 xvfb x11vnc cabextract libntlm0 libwbclient0 ttf-mscorefonts-installer winbind unzip xml2 wget \
+ && apt-get install -y --install-recommends wine-stable cabextract libntlm0 libwbclient0 ttf-mscorefonts-installer winbind unzip xml2 wget p7zip-full
+
+RUN : \
  && curl -sL https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks > /usr/local/bin/winetricks \
  && chmod a=rx /usr/local/bin/winetricks \
  && useradd --create-home -s /bin/bash dotnet \
  && mkdir -p /app \
- && touch /usr/local/openresty/nginx/logs/error.log \
- && chown -R dotnet:dotnet /app /usr/local/openresty/nginx/logs/error.log /home/dotnet \
+ && chown -R dotnet:dotnet /app /home/dotnet \
  && rm -rf /var/lib/apt/lists/* /tmp/* /home/dotnet/.wine/drive_c/users/dotnet/Temp/* \
  && mkdir -p /tmp/.X11-unix \
  && chmod 1777 /tmp/.X11-unix
 
+COPY --chown=dotnet --from=fetch /tmp/* /tmp/
+COPY --chown=dotnet --from=build /tmp/fcgi /tmp/fcgi
+
+RUN chown -R dotnet:dotnet /tmp/fcgi
+
+RUN : \
+ && printf "\nInstall wine-mono\en\n" \
+ && mkdir -p /usr/share/wine/mono \
+ && xzcat /tmp/wine-mono.tar.xz | tar xf - -C /usr/share/wine/mono/
+
+RUN : \
+ && printf "\nInstall wine-gecko\n\n" \
+ && mkdir -p /usr/share/wine/gecko \
+ && bzip2 -cd /tmp/wine_gecko.tar.bz2 | tar xvf - -C /usr/share/wine/gecko/
+
+
+ADD ./fcgi /tmp/fcgi
+RUN : \
+ && xzcat /tmp/wine.tar.xz | tar xf - -C /home/dotnet \
+ && cd /tmp/fcgi \
+ && unzip gac.zip \
+ && chown -R dotnet:dotnet /home/dotnet /tmp/fcgi
 
 USER dotnet
 ENV WINEARCH=win32
 ENV WINEDEBUG=-all
 
 ENV WINEPATH='C:\\windows\\system32;C:\\windows;C:\\windows\\system32\\wbem;C:\\Program Files\\SAP BusinessObjects\\Crystal Reports for .NET Framework 4.0\\Common\\SAP BusinessObjects Enterprise XI 4.0\\win32_x86'
-ENV DISPLAY=:1
 
-COPY --chown=dotnet --from=fetch /tmp/* /tmp/
-COPY --chown=dotnet --from=build /tmp/fcgi /tmp/fcgi
-RUN Xvfb :1 & echo \
- && cd /tmp \
- && printf "\nCreate wine prefix\n\n" \
- && WINEDLLOVERRIDES="mscoree,mshtml=" wineboot -u \
- && printf "\nInstall wine-mono\n\n" \
- && wine msiexec /i /tmp/wine-mono-2.9.2.msi \
- && printf "\nInstall wine-gecko\n\n" \
- && wine msiexec /i wine_gecko-2.47-x86.msi \
- && printf "\nReboot\n\n" \
- && wineboot -s \
- && printf "\nInstall dotnet48\n\n" \
- && winetricks -q dotnet48 \
- && printf "\nInstall dotnet452\n\n" \
- && winetricks -q dotnet452 \
- && printf "\nInstall dotnet471\n\n" \
- && winetricks -q dotnet471 \
- && printf "\nInstall dotnet472\n\n" \
- && winetricks -q dotnet472 \
- && printf "\nInstall fonts\n\n" \
- && winetricks -q corefonts consolas cambria calibri arial courier georgia impact lucida tahoma trebuchet verdana webdings
 RUN : \
- && cd /tmp \
- && printf "\nunzip CR\n\n" \
- && unzip fcgi/cr-32.zip \
- && printf "start CR phase(1)\n" \
- && wine msiexec /i CRRuntime_32bit_13_0_25.msi /qn /norestart ALLUSERS=1 \
- && printf "Compile .net assemblies\n" \
- && (wine /home/dotnet/.wine/drive_c/windows/Microsoft.NET/Framework/v4.0.30319/ngen.exe update /nologo /force || /bin/true)
-RUN : \
- && cd /tmp \
- && printf "start CR phase(2)\n" \
- && wine msiexec /i /tmp/CRRuntime_32bit_13_0_25.msi /qn /norestart ALLUSERS=1 \
- && printf "done\n" \
- && sleep 1 \
- && (pkill Xvfb || /bin/true) \
- && cd /tmp/fcgi \
- && unzip gac.zip \
- && ls \
  && wine ./gacutil.exe /i fastcgi-mono-server4.exe \
  && wine ./gacutil.exe /i Mono.WebServer.dll \
- && wine ./gacutil.exe /i Mono.Posix.NETStandard.dll \
- && cd / \
- && rm -rf ~/.cache /tmp/.X1-lock /tmp/*
+ && wine ./gacutil.exe /i Mono.Posix.NETStandard.dll
+
+RUN : \
+  && rm -rf ~/.cache /tmp/*
 
 COPY fastcgi_params /usr/local/openresty/nginx/conf/fastcgi_params
-COPY --chown=dotnet nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
-COPY --chown=dotnet serve.conf /usr/local/openresty/nginx/conf/serve.conf
-COPY --chown=dotnet serve-dotnetcore.conf /usr/local/openresty/nginx/conf/serve.dnc
+COPY --chown=dotnet serve.conf /rules/server.d/root.conf
+COPY --chown=dotnet serve-dotnetcore.conf /rules/server.d/root.dnc
 COPY Index.html /app
 COPY entry-dotnetw.sh /
 COPY rules /rules/

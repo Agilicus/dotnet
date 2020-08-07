@@ -18,16 +18,16 @@ wait_ready() {
 export ASPNETCORE_URLS=http://0.0.0.0:9000
 
 log "Startup"
-rm -f /tmp/.X1-lock
-log "Start Xvfb"
-Xvfb :1 &
+#rm -f /tmp/.X1-lock
+#log "Start Xvfb"
+#Xvfb :1 &
 #log "Update .NET bits (foreground) ..."
 #wine /home/dotnet/.wine/drive_c/windows/Microsoft.NET/Framework/v4.0.30319/ngen.exe update /nologo /force ||true
 log "Start fastcgi"
 if [ -n "$ENTRY" ]
 then
     # A hybrid .net + dotnetcore, created as a Kestrel executable.
-    cp /usr/local/openresty/nginx/conf/serve.dnc /usr/local/openresty/nginx/conf/serve.conf
+    cp /rules/server.d/root.dnc /rules/server.d/root.conf
     wine $ENTRY >/dev/null &
 else
     wine /home/dotnet/.wine/drive_c/windows/Microsoft.NET/assembly/GAC_32/fastcgi-mono-server4/v4.0_0.4.0.0__0738eb9f132ed756/fastcgi-mono-server4.exe --applications=/:. --socket=tcp:127.0.0.1:9000 &

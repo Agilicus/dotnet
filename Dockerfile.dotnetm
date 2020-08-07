@@ -1,5 +1,8 @@
-FROM agilicus/openresty:v0.0.3
-LABEL maintainer="don@agilicus.com"
+FROM agilicus/openresty:v0.3.8
+LABEL maintainer="Agilicus Devs <dev@agilicus.com>"
+
+ENV TZ=Etc/UTC
+ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /app
 
@@ -10,13 +13,15 @@ ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
 RUN apt-get update && \
     apt-get -y install gnupg2 ca-certificates && \
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
-    echo "deb https://download.mono-project.com/repo/ubuntu stable-bionic main" | tee -a /etc/apt/sources.list.d/mono-official-stable.list && \
+    echo "deb https://download.mono-project.com/repo/ubuntu stable-focal main" | tee -a /etc/apt/sources.list.d/mono-official-stable.list && \
     apt-get update && \
     apt-get -y install xml2 mono-runtime
 
 RUN apt-get update \
  && apt-get -y install dumb-init libfcgi0ldbl \
  && apt-get update \
+ && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+ && echo $TZ > /etc/timezone \
  && apt-get install -y mono-xsp4 mono-fastcgi-server4 mono-fpm-server \
  && useradd --create-home -s /bin/bash dotnet \
  && mkdir -p /app \
@@ -26,11 +31,10 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 COPY fastcgi_params /usr/local/openresty/nginx/conf/fastcgi_params
-COPY nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
-COPY serve.conf /usr/local/openresty/nginx/conf/serve.conf
+COPY rules /rules/
+COPY serve.conf /rules/server.d/root.conf
 COPY Index.html /app
 COPY entry.sh /
-COPY rules /rules/
 
 USER dotnet
 EXPOSE 5000
