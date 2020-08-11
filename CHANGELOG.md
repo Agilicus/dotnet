@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.26](https://git.agilicus.com/open-source/dotnet/compare/v0.0.25...v0.0.26) (2020-08-11)
+
+
+### Bug Fixes
+
+* refactor to use openresty default nginx.conf ([7a1288d](https://git.agilicus.com/open-source/dotnet/commit/7a1288dd7255aa441bd85c556cfb3b79cd5c4031))
+
 ### [0.0.25](https://git.agilicus.com/open-source/dotnet/compare/v0.0.24...v0.0.25) (2020-07-22)
 
 
