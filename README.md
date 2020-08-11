@@ -87,3 +87,9 @@ and then open your browser to `http://localhost:5000`
 
 It will include configuration in server-scope from /rules/server.d/*.
 It will include configuration in location-scope from /rules/location.d/*.
+
+
+## The dotnetw wine prefix
+
+The wine prefix is too complicated to install inside docker. It is built
+outside, and a blob is placed in gcs.

@@ -20,6 +20,6 @@ log "Start fastcgi"
 fastcgi-mono-server4 --applications=/:. --socket=tcp:127.0.0.1:9000 &
 wait_ready
 log "Start openresty"
-openresty -g 'daemon off;' &
+/usr/local/openresty/bin/openresty -g 'daemon off;' &
 wait -n
 log "Exit..."
