@@ -1,14 +1,13 @@
-## dotnet{c/m/w}
+## dotnet
 
 This container will server an ASP.net application, via openresty
 with JSON-logging and embedded WAF.
 
 Place the app in /app.
 
-There are 3 containers built:
+There are 2 containers built:
 
-- dotnetc --> dotnetcore 3.1 for modern applications
-- dotnetm --> .NET on Mono for legacy applications
+- dotnet  --> dotnetcore 3.1 for modern applications (and .NET on Mono for legacy)
 - dotnetw --> .NET on Mono on Wine for legacy applications that need win32
 
 Each works the same way: [openresty](https://openresty.org/) and [lua-resty-waf](https://github.com/p0pr0ck5/lua-resty-waf)
@@ -30,7 +29,7 @@ RUN dotnet restore
 COPY . /src
 RUN dotnet publish -c release -o /app
 
-FROM agilicus/dotnetc
+FROM agilicus/dotnet
 WORKDIR /app
 COPY --from=build-env /app /app
 ```
@@ -59,7 +58,7 @@ RUN nuget restore -PackagesDirectory ../packages
 
 RUN msbuild  /p:Configuration=Release\;WebOutputDir=/tmp/x\;OutDir=/tmp/x MYPROJECT.sln
 
-FROM agilicus/dotnetw
+FROM agilicus/dotnet
 WORKDIR /app
 COPY --from=build-env --chown=dotnet /tmp/x/_PublishedWebsites/MYAPP .
 ```
@@ -69,13 +68,6 @@ You may test it with:
 tag=$(date +%Y%m%d_%H%M%S)
 docker build -t MYNAME:$tag .
 docker run --rm -it -p 4200:5000 MYNAME:$tag
-```
-
-You may override the nginx.conf/lua rules and the app:
-
-
-```
-docker run --rm -it -p 4200:5000 -v $PWD/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf -v $PWD/rules:/rules -v $PWD/app:/app MYNAME:$tag
 ```
 
 and then open your browser to `http://localhost:5000`
