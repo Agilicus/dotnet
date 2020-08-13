@@ -52,17 +52,24 @@ autorel:
 #  - image:M.m
 #  - image:M
 #
-build-m:
-  stage: build
-  image: cr.agilicus.com/corp-tools/build-containers/img-build
-  script: |
-    std-build-tag-push -s m -f Dockerfile.dotnetm
 
-build-c:
+build:
   stage: build
   image: cr.agilicus.com/corp-tools/build-containers/img-build
   script: |
-    std-build-tag-push -s c -f Dockerfile.dotnetc
+    std-build-tag-push -f Dockerfile
+
+#build-m:
+#  stage: build
+#  image: cr.agilicus.com/corp-tools/build-containers/img-build
+#  script: |
+#    std-build-tag-push -s m -f Dockerfile.dotnetm
+
+#build-c:
+#  stage: build
+#  image: cr.agilicus.com/corp-tools/build-containers/img-build
+#  script: |
+#    std-build-tag-push -s c -f Dockerfile.dotnetc
 
 build-w:
   stage: build
