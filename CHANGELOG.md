@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.28](https://git.agilicus.com/open-source/dotnet/compare/v0.0.27...v0.0.28) (2020-08-13)
+
+
+### Bug Fixes
+
+* correct shared dotnet/.net entry ([7246b03](https://git.agilicus.com/open-source/dotnet/commit/7246b032ff9a44487ec9a2879f5df9fa6953a89e))
+
 ### [0.0.27](https://git.agilicus.com/open-source/dotnet/compare/v0.0.26...v0.0.27) (2020-08-13)
 
 
