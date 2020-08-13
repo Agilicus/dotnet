@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.27](https://git.agilicus.com/open-source/dotnet/compare/v0.0.26...v0.0.27) (2020-08-13)
+
+
+### Features
+
+* merge dotnetcore and mono containers ([3e7d11e](https://git.agilicus.com/open-source/dotnet/commit/3e7d11e0d291f11108b66896f12ccc9d7ef1f22a))
+
 ### [0.0.26](https://git.agilicus.com/open-source/dotnet/compare/v0.0.25...v0.0.26) (2020-08-11)
 
 
