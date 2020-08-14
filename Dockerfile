@@ -26,7 +26,12 @@ RUN apt-get update && \
 RUN wget -O /tmp/packages-microsoft-prod.deb -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb && \
     dpkg -i /tmp/packages-microsoft-prod.deb && \
     apt-get update && \
-    apt-get -y install gnupg2 ca-certificates dotnet-sdk-3.1 xml2 dumb-init
+    apt-get -y install gnupg2 ca-certificates dotnet-sdk-3.1 aspnetcore-runtime-3.1 xml2 dumb-init && \
+    wget -O /tmp/dotnet-sdk-2.2.tar.gz https://download.visualstudio.microsoft.com/download/pr/022d9abf-35f0-4fd5-8d1c-86056df76e89/477f1ebb70f314054129a9f51e9ec8ec/dotnet-sdk-2.2.207-linux-x64.tar.gz && \
+    cd /usr/share/dotnet && \
+    tar zxvf /tmp/dotnet-sdk-2.2.tar.gz && \
+    rm -f /tmp/packages-microsoft-prod.deb /tmp/dotnet-sdk-2.2.tar.gz
+
 
 # Install runtime support etc
 RUN apt-get -y install dumb-init libfcgi0ldbl \
