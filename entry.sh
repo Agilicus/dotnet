@@ -39,6 +39,17 @@ wait_ready_dnc() {
 export ASPNETCORE_URLS=http://0.0.0.0:9000
 
 is_dotnetcore() {
+    if [ -n "$DOTNET" ]
+    then
+      log "DOTNET is is set, force .NET xsp runtime"
+      return 1
+    fi
+    if [ -n "$DOTNETCORE" ]
+    then
+      log "DOTNETCORE is is set, force dotnetcore runtime"
+      return 0
+    fi
+
     if [ -f web.config -o -f Web.config ]
     then
 	grep -q aspNetCore [wW]eb.config
