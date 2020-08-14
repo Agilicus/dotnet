@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.30](https://git.agilicus.com/open-source/dotnet/compare/v0.0.29...v0.0.30) (2020-08-14)
+
+
+### Bug Fixes
+
+* add dotnetcore 2.2, Index.html to path ([6ab4ee4](https://git.agilicus.com/open-source/dotnet/commit/6ab4ee4f08d1f9d98f0ab03b4d6830483f644fbe))
+
 ### [0.0.29](https://git.agilicus.com/open-source/dotnet/compare/v0.0.28...v0.0.29) (2020-08-14)
 
 
