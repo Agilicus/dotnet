@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.29](https://git.agilicus.com/open-source/dotnet/compare/v0.0.28...v0.0.29) (2020-08-14)
+
+
+### Features
+
+* add override DOTNET/DOTNETCORE env var ([8e2b057](https://git.agilicus.com/open-source/dotnet/commit/8e2b057897f479dd6a174e0bfdaf3393715965a8))
+* add override DOTNET/DOTNETCORE env var ([91875d2](https://git.agilicus.com/open-source/dotnet/commit/91875d277bb0bd007b55308c898736c76c0e8058))
+
 ### [0.0.28](https://git.agilicus.com/open-source/dotnet/compare/v0.0.27...v0.0.28) (2020-08-13)
 
 
