@@ -25,12 +25,12 @@ RUN apt-get update \
 FROM agilicus/openresty:v0.5.16
 LABEL maintainer="don@agilicus.com"
 
-RUN useradd --create-home -s /bin/bash dotnet \
+RUN ln -s /home/openresty /home/dotnet \
  && apt-get update \
  && apt-get install -y xz-utils unzip bzip2 \
  && rm -rf /var/lib/apt/lists/*
 
-COPY --chown=dotnet --from=build /tmp/fcgi /tmp/fcgi
+COPY --chown=openresty --from=build /tmp/fcgi /tmp/fcgi
 
 RUN : \
  && printf "\nfetch wine-mono\n\n" \
@@ -53,7 +53,7 @@ RUN : \
  && xzcat /tmp/wine.tar.xz | tar xf - -C /home/dotnet \
  && cd /tmp/fcgi \
  && unzip gac.zip \
- && chown -R dotnet:dotnet /home/dotnet /tmp/fcgi \
+ && chown -R openresty:openresty /home/dotnet /tmp/fcgi \
  && rm -rf /home/dotnet/.wine/drive_c/users/dotnet/Temp/* \
  && ls /tmp/fcgi \
  && rm /tmp/wine.tar.xz
@@ -84,11 +84,11 @@ RUN : \
  && curl -sL https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks > /usr/local/bin/winetricks \
  && chmod a=rx /usr/local/bin/winetricks \
  && mkdir -p /app \
- && chown -R dotnet:dotnet /app \
+ && chown -R openresty:openresty /app \
  && mkdir -p /tmp/.X11-unix \
  && chmod 1777 /tmp/.X11-unix
 
-USER dotnet
+USER openresty
 ENV WINEARCH=win32
 ENV WINEDEBUG=-all
 
@@ -105,8 +105,8 @@ RUN : \
   && rm -rf ~/.cache /tmp/*
 
 COPY fastcgi_params /usr/local/openresty/nginx/conf/fastcgi_params
-COPY --chown=dotnet serve-xsp.conf /rules/server.d/root.conf
-COPY --chown=dotnet serve-dnc.conf /rules/server.d/root.dnc
+COPY --chown=openresty serve-xsp.conf /rules/server.d/root.conf
+COPY --chown=openresty serve-dnc.conf /rules/server.d/root.dnc
 COPY Index.html /app
 COPY entry-dotnetw.sh /
 COPY rules /rules/

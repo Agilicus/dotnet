@@ -37,7 +37,7 @@ RUN wget -O /tmp/packages-microsoft-prod.deb -q https://packages.microsoft.com/c
 RUN apt-get -y install dumb-init libfcgi0ldbl \
  && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
  && echo $TZ > /etc/timezone \
- && useradd --create-home -s /bin/bash dotnet \
+ && ln -s /home/openresty /home/dotnet \
  && mkdir -p /app \
  && mkdir -p ~/dotnet/.config/"Mono development team" \
  && rm -rf /var/lib/apt/lists/*
@@ -50,9 +50,9 @@ COPY serve-dnc.conf /rules/server.d/root.conf.dnc
 COPY Index.html /app
 COPY entry.sh /
 
-RUN chown -R dotnet:dotnet  /app /rules/server.d
+RUN chown -R openresty:openresty  /app /rules/server.d
 
-USER dotnet
+USER openresty
 EXPOSE 5000
 ENTRYPOINT [ "/usr/bin/dumb-init", "--" ]
 CMD [ "/entry.sh" ]
