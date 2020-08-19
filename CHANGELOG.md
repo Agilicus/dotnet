@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.31](https://git.agilicus.com/open-source/dotnet/compare/v0.0.30...v0.0.31) (2020-08-19)
+
+
+### Bug Fixes
+
+* must use userid 1000 ([0f5acac](https://git.agilicus.com/open-source/dotnet/commit/0f5acac41ef45451e852dfdd330877295026531a))
+
 ### [0.0.30](https://git.agilicus.com/open-source/dotnet/compare/v0.0.29...v0.0.30) (2020-08-14)
 
 
