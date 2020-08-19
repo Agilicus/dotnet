@@ -20,7 +20,8 @@ RUN apt-get update && \
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
     echo "deb https://download.mono-project.com/repo/ubuntu stable-focal main" | tee -a /etc/apt/sources.list.d/mono-official-stable.list && \
     apt-get update && \
-    apt-get -y install xml2 mono-runtime mono-xsp4 mono-fastcgi-server4 mono-fpm-server
+    apt-get -y install xml2 mono-runtime mono-xsp4 mono-fastcgi-server4 mono-fpm-server && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install dotnetcore
 RUN wget -O /tmp/packages-microsoft-prod.deb -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb && \
@@ -30,11 +31,14 @@ RUN wget -O /tmp/packages-microsoft-prod.deb -q https://packages.microsoft.com/c
     wget -O /tmp/dotnet-sdk-2.2.tar.gz https://download.visualstudio.microsoft.com/download/pr/022d9abf-35f0-4fd5-8d1c-86056df76e89/477f1ebb70f314054129a9f51e9ec8ec/dotnet-sdk-2.2.207-linux-x64.tar.gz && \
     cd /usr/share/dotnet && \
     tar zxvf /tmp/dotnet-sdk-2.2.tar.gz && \
-    rm -f /tmp/packages-microsoft-prod.deb /tmp/dotnet-sdk-2.2.tar.gz
+    rm -f /tmp/packages-microsoft-prod.deb /tmp/dotnet-sdk-2.2.tar.gz && \
+    rm -rf /var/lib/apt/lists/*
+
 
 
 # Install runtime support etc
-RUN apt-get -y install dumb-init libfcgi0ldbl \
+RUN apt-get update \
+ && apt-get -y install dumb-init libfcgi0ldbl \
  && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
  && echo $TZ > /etc/timezone \
  && ln -s /home/openresty /home/dotnet \
@@ -50,7 +54,7 @@ COPY serve-dnc.conf /rules/server.d/root.conf.dnc
 COPY Index.html /app
 COPY entry.sh /
 
-RUN chown -R openresty:openresty  /app /rules/server.d
+RUN chown -R openresty:openresty  /app /rules/server.d /home/openresty
 
 USER openresty
 EXPOSE 5000
