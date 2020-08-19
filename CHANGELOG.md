@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.32](https://git.agilicus.com/open-source/dotnet/compare/v0.0.31...v0.0.32) (2020-08-19)
+
+
+### Bug Fixes
+
+* allow 404 to bring online ([263872f](https://git.agilicus.com/open-source/dotnet/commit/263872fb14b014db9efd9203ed3baa306f56fd2e))
+
 ### [0.0.31](https://git.agilicus.com/open-source/dotnet/compare/v0.0.30...v0.0.31) (2020-08-19)
 
 
