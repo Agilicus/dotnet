@@ -5,5 +5,5 @@ RUN mkdir -p /src && \
     dotnet new webApp -o /src --no-https && \
     dotnet build -c release -o /app
 
-FROM agilicus/dotnetc
+FROM agilicus/dotnet
 COPY --from=sample /app /app
