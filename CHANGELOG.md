@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.33](https://git.agilicus.com/open-source/dotnet/compare/v0.0.32...v0.0.33) (2020-08-26)
+
+
+### Bug Fixes
+
+* add libgdiplus for rendering ([21aa68d](https://git.agilicus.com/open-source/dotnet/commit/21aa68d1d20e154272b741cb49bfa4d86e3ef2b5))
+
 ### [0.0.32](https://git.agilicus.com/open-source/dotnet/compare/v0.0.31...v0.0.32) (2020-08-19)
 
 
