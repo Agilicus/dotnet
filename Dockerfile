@@ -38,7 +38,7 @@ RUN wget -O /tmp/packages-microsoft-prod.deb -q https://packages.microsoft.com/c
 
 # Install runtime support etc
 RUN apt-get update \
- && apt-get -y install dumb-init libfcgi0ldbl \
+ && apt-get -y install dumb-init libfcgi0ldbl libgdiplus libc6-dev fonts-dejavu-core \
  && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
  && echo $TZ > /etc/timezone \
  && ln -s /home/openresty /home/dotnet \
