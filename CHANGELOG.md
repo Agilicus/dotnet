@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.34](https://git.agilicus.com/open-source/dotnet/compare/v0.0.33...v0.0.34) (2020-08-31)
+
+
+### Features
+
+* add jsreports library support for chrome ([9152565](https://git.agilicus.com/open-source/dotnet/commit/9152565d6f25d234d25a9d5b6d38be3554686114))
+
 ### [0.0.33](https://git.agilicus.com/open-source/dotnet/compare/v0.0.32...v0.0.33) (2020-08-26)
 
 
