@@ -37,14 +37,19 @@ RUN wget -O /tmp/packages-microsoft-prod.deb -q https://packages.microsoft.com/c
 
 
 # Install runtime support etc
+# The libx11-* is for chrome, which is for jsreports
 RUN apt-get update \
  && apt-get -y install dumb-init libfcgi0ldbl libgdiplus libc6-dev fonts-dejavu-core \
  && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
  && echo $TZ > /etc/timezone \
  && ln -s /home/openresty /home/dotnet \
+ && apt-get install -y --no-install-recommends libx11-xcb1 libxcomposite1:amd64 libxcursor1:amd64 libxdamage-dev libxi-dev libxtst-dev libnss3 libcups2 libxss1 libxrandr-dev libasound2-dev libatk1.0-0 libatk-bridge2.0-dev libpangocairo-1.0-0 libgtk-3-0 \
  && mkdir -p /app \
  && mkdir -p ~/dotnet/.config/"Mono development team" \
  && rm -rf /var/lib/apt/lists/*
+
+ENV chrome_launchOptions_executablePath google-chrome-stable
+ENV chrome_launchOptions_args --no-sandbox,--disable-dev-shm-usage
 
 COPY fastcgi_params /usr/local/openresty/nginx/conf/fastcgi_params
 COPY rules /rules/
