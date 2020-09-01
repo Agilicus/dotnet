@@ -49,7 +49,7 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 ENV chrome_launchOptions_executablePath google-chrome-stable
-ENV chrome_launchOptions_args --no-sandbox,--disable-dev-shm-usage
+ENV chrome_launchOptions_args --no-sandbox,--disable-dev-shm-usage,--single-process,--no-zygote
 
 COPY fastcgi_params /usr/local/openresty/nginx/conf/fastcgi_params
 COPY rules /rules/
