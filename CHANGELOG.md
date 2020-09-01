@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.35](https://git.agilicus.com/open-source/dotnet/compare/v0.0.34...v0.0.35) (2020-09-01)
+
+
+### Bug Fixes
+
+* add ,--single-process,--no-zygote for zombie ([248a2a9](https://git.agilicus.com/open-source/dotnet/commit/248a2a9aaa790f8aa76140e06c52c8ab7e63572f))
+
 ### [0.0.34](https://git.agilicus.com/open-source/dotnet/compare/v0.0.33...v0.0.34) (2020-08-31)
 
 
