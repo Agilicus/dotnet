@@ -8,10 +8,18 @@ wait_ready() {
     SCRIPT_FILENAME=/
     QUERY_STRING= REQUEST_URI=/
     REQUEST_METHOD=GET
+    n=1
     until cgi-fcgi -bind -connect 127.0.0.1:9000 |egrep -q "Status: 200 OK|Status: 404 Not Found|Status: 302 Found"
     do
         log "Wait for fastcgi-mono to be ready"
         sleep 1
+        n=$((n+1))
+        if [ $n -eq 5 ]
+        then
+            # Something has (probably) gone wrong, output the full detail error
+            log "Error: application has not come online in $n attempts. This likely indicates a problem compiling/uploading it."
+            cgi-fcgi -bind -connect 127.0.0.1:9000
+        fi
     done
 }
 
